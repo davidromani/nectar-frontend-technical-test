@@ -12,6 +12,21 @@
     <div class="login-logo">
       <img src="assets/img/appicon.svg" alt="Ionic logo">
     </div>
+
+    <ion-list style="display:contents;">
+      <ion-item *ngIf="showLoadingAlert" color="primary">
+        <ion-label class="ion-text-wrap">
+          Loading...
+        </ion-label>
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-item>
+      <ion-item *ngIf="showErrorAlert" color="danger">
+        <ion-label class="ion-text-wrap">
+          {{ errorMessage }}
+        </ion-label>
+        <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
+      </ion-item>
+    </ion-list>
   
     <div class="login-form">
       <form #loginForm="ngForm" novalidate>

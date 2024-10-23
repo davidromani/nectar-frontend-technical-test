@@ -59,21 +59,23 @@ export class UserData {
     }
   }
 
-  login(username: string, password: string): Promise<any> {
+  login(username: string, password: string) {
     console.log('user-data login', username, password);
-    let result = this.api.login(username, password).subscribe(async (res) => {
+   
+
+    /*let result = this.api.login(username, password).subscribe(async (res) => {
       if (res.token) {
         await this.storage.set(this.tokenKey, res.token);
         this.authState.next(true);
+        window.dispatchEvent(new CustomEvent('user:login'));
       }
-    });
-    console.log(result);
-
-    return;
-    /*return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(username);
-      return window.dispatchEvent(new CustomEvent('user:login'));
+    },
+    (error) => {
+      console.error('user-data login error response', error);
+      this.authState.next(false);
     });*/
+
+    return this.api.login(username, password);;
   }
 
   async logout(): Promise<any> {
