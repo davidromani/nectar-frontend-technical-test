@@ -19,15 +19,12 @@ export class LoginPage {
   ) { }
 
   onLogin(form: NgForm) {
+    console.log('onLogin');
     this.submitted = true;
-
     if (form.valid) {
-      this.userData.login(this.login.username);
+      this.userData.login(this.login.username, this.login.password);
+      console.log(this.login.username, this.login.password);
       this.router.navigateByUrl('/app/tabs/schedule');
     }
-  }
-
-  onSignup() {
-    this.router.navigateByUrl('/signup');
   }
 }

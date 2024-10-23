@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-
+import { HttpProviderService } from './http-provider';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,10 @@ import { Storage } from '@ionic/storage-angular';
 export class UserData {
   favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
   constructor(
-    public storage: Storage
+    public storage: Storage,
+    public api: HttpProviderService,
   ) { }
 
   hasFavorite(sessionName: string): boolean {
@@ -29,18 +29,16 @@ export class UserData {
     }
   }
 
-  login(username: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
+  login(username: string, password: string): Promise<any> {
+    console.log('user-data login', username, password);
+    let result = this.api.getAllTasks();
+    console.log(result);
+
+    return;
+    /*return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
       this.setUsername(username);
       return window.dispatchEvent(new CustomEvent('user:login'));
-    });
-  }
-
-  signup(username: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(username);
-      return window.dispatchEvent(new CustomEvent('user:signup'));
-    });
+    });*/
   }
 
   logout(): Promise<any> {
@@ -64,12 +62,6 @@ export class UserData {
   isLoggedIn(): Promise<boolean> {
     return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
       return value === true;
-    });
-  }
-
-  checkHasSeenTutorial(): Promise<string> {
-    return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
-      return value;
     });
   }
 }
