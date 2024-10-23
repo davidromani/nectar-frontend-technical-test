@@ -1,0 +1,7 @@
+{
+    "name": "nectar-frontend-ionic-app",
+    "type": "angular",
+    "integrations": {
+      "capacitor": {}
+    }
+  }
