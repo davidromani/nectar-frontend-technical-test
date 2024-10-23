@@ -39,6 +39,7 @@ export class LoginPage {
       this.storage.set('user-name', this.login.username);
       this.showErrorAlert = false;
       this.errorMessage = '';
+      this.router.navigateByUrl('/tasks/tasks');
     },
     (error) => {
       console.error('error', error.statusText);
