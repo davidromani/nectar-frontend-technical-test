@@ -13,6 +13,7 @@ export class ShowTaskPage {
   showLoadingAlert: boolean;
   showErrorAlert: boolean;
   errorMessage: string;
+  found: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +24,7 @@ export class ShowTaskPage {
     this.showErrorAlert = false;
     this.errorMessage = '';
     this.task = new Task();
+    this.found = false;
   }
 
   async ngOnInit() {
@@ -30,6 +32,24 @@ export class ShowTaskPage {
     console.log('Task detail ngOnInit', taskId);
     let tasks = await this.storage.get('tasks');
     console.log('Stored tasks', tasks);
+    tasks.forEach(item => {
+      if (item.id === taskId) {
+        this.task.id = item.id;
+        this.task.status = item.status;
+        this.task.title = item.title;
+        this.task.description = item.description;
+        this.task.user = item.user;
+        this.task.date = item.date;
+        this.found = true;
+      }
+    });
+    if (this.found) { 
+      this.showLoadingAlert = false;
+    } else {
+      this.showLoadingAlert = false;
+      this.showErrorAlert = true;
+      this.errorMessage = 'Task with ID ' + taskId + ' not found';
+    }
   }
 
   goBackTask() {
