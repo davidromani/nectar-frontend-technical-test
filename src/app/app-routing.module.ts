@@ -23,7 +23,11 @@ const routes: Routes = [
     path: 'show-task/:id',
     loadChildren: () => import('./pages/show-task/show-task.module').then(m => m.ShowTaskModule)
   },
-/*{
+  {
+    path: 'edit-task/:id',
+    loadChildren: () => import('./pages/edit-task/edit-task.module').then(m => m.EditTaskModule)
+  },
+  /*{
     path: 'tutorial',
     loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
     canMatch: [checkTutorialGuard]

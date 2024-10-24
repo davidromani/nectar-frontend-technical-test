@@ -72,6 +72,7 @@ export class TasksPage {
 
   editTask(id: number) {
     console.log('editTask', id);
+    this.router.navigateByUrl('/edit-task/' + id);
   }
 
   async deleteTask(id: number) {

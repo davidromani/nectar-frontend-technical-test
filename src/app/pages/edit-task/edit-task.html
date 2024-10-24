@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="primary">
+      <ion-button fill="outline" (click)="goBackTask()">
+        Go back
+        <ion-icon slot="end" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Edit Task</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content class="ion-padding">
+  <ion-list style="display:contents;">
+    <ion-item *ngIf="showLoadingAlert" color="primary">
+      <ion-label class="ion-text-wrap">
+        Loading...
+      </ion-label>
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-item>
+    <ion-item *ngIf="showErrorAlert" color="danger">
+      <ion-label class="ion-text-wrap">
+        {{ errorMessage }}
+      </ion-label>
+      <ion-icon name="alert-circle-outline" size="large" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <form (ngSubmit)="updateTask()" *ngIf="found">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="task.title"
+        name="title"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea
+        [(ngModel)]="task.description"
+        name="description"
+        required
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Status</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="task.status"
+        name="status"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" color="primary">
+      Edit Task
+    </ion-button>
+  </form>
+</ion-content>
