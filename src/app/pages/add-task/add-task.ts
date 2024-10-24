@@ -4,11 +4,11 @@ import { Storage } from '@ionic/storage-angular';
 import { Task, TasksData } from '../../providers/tasks-data';
 
 @Component({
-  selector: 'tasks-list',
-  templateUrl: 'tasks.html',
-  styleUrls: ['./tasks.scss'],
+  selector: 'add-task',
+  templateUrl: 'add-task.html',
+  styleUrls: ['./add-task.scss'],
 })
-export class TasksPage {
+export class AddTaskPage {
 
   tasks: Task[] = [];
   showLoadingAlert: boolean;
@@ -59,7 +59,6 @@ export class TasksPage {
 
   addTask() {
     console.log('addTask');
-    this.router.navigateByUrl('/tasks/add');
   }
 
   editTask(id: number) {
