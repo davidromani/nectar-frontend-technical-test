@@ -10,7 +10,7 @@ import { Task, TasksData } from '../../providers/tasks-data';
 })
 export class AddTaskPage {
 
-  tasks: Task[] = [];
+  task: Task;
   showLoadingAlert: boolean;
   showErrorAlert: boolean;
   errorMessage: string;
@@ -25,47 +25,34 @@ export class AddTaskPage {
     this.errorMessage = '';
   }
 
-  ngOnInit() {
-    this.loadTasks();
-  }
-
-  async loadTasks() {
-    let token = await this.storage.get('jwt-token');
-    console.log('TOKEN', token);
-    /*let response = this.taskData.getTasks(token);
-    console.log('response', response);*/
-    this.taskData.getTasks(token).subscribe(
-      (response: any) => {
-        this.showLoadingAlert = false;
-        //this.tasks = response;
-        console.log('response', response.body);
-        response.body.member.forEach(item => {
-          let task = new Task();
-          task.id = item.id;
-          task.status = item.status;
-          task.title = item.title;
-          task.description = item.description;
-          this.tasks.push(task);
-        });
-      },
-      (error) => {
-        console.error('Error fetching tasks', error);
-        this.showLoadingAlert = false;
-        this.showErrorAlert = true;
-        this.errorMessage = error.statusText;
-      }
-    );
-  }
-
-  addTask() {
+  async addTask() {
     console.log('addTask');
+    let token = await this.storage.get('jwt-token');
+    if (this.task.title.trim() && this.task.description.trim()) {
+      this.taskData.addTask(this.task, token).subscribe(
+        (response) => {
+          this.showLoadingAlert = false;
+          console.log('Task added successfully', response);
+          // After successful task creation, redirect to the tasks list page
+          this.router.navigate(['/tasks/tasks']);
+        },
+        (error) => {
+          console.error('Error adding task', error);
+          this.showLoadingAlert = false;
+          this.showErrorAlert = true;
+          this.errorMessage = error.statusText;
+        }
+      );
+    } else {
+      console.log('Please fill in all fields');
+      this.showLoadingAlert = false;
+      this.showErrorAlert = true;
+      this.errorMessage = 'Please fill in all fields';
+    }
   }
 
-  editTask(id: number) {
-    console.log('editTask', id);
-  }
-
-  deleteTask(id: number) {
-    console.log('deleteTask', id);
+  goBackTask() {
+    console.log('goBackTask');
+    this.router.navigateByUrl('/tasks/tasks');
   }
 }

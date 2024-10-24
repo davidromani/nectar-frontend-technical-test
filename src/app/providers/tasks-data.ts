@@ -77,6 +77,19 @@ export class TasksData {
     return this.http.get<Task[]>(httpLink.getAllTasks, httpOptions);
   }
 
+  addTask(task: Task, token: string): Observable<Task> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/ld+json',
+        'Authorization': 'Bearer ' + token
+      }),
+      mode: 'cors',
+      observe: "response" as 'body'
+    };
+    
+    return this.http.post<Task>(httpLink.addTask, task, httpOptions);
+  }
+
   getMap() {
     return this.load().pipe(
       map((data: any) => {
