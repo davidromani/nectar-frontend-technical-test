@@ -10,7 +10,7 @@ import { UserOptions } from '../../interfaces/user-options';
   templateUrl: 'show-task.html',
   styleUrls: ['./show-task.scss'],
 })
-export class ShowTask {
+export class ShowTaskPage {
   login: UserOptions = { username: '', password: '' };
   submitted = false;
   showLoadingAlert: boolean;

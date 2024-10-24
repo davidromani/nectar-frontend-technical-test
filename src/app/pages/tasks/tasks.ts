@@ -45,8 +45,11 @@ export class TasksPage {
           task.status = item.status;
           task.title = item.title;
           task.description = item.description;
+          task.user = item.user;
+          task.date = item.date;
           this.tasks.push(task);
         });
+        this.storage.set('tasks', this.tasks);
       },
       (error) => {
         console.error('Error fetching tasks', error);

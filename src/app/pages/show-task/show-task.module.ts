@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { ShowTask } from './show-task';
+import { ShowTaskPage } from './show-task';
 import { ShowTaskPageRoutingModule } from './show-task-routing.module';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { ShowTaskPageRoutingModule } from './show-task-routing.module';
     ShowTaskPageRoutingModule
   ],
   declarations: [
-    ShowTask,
+    ShowTaskPage,
   ]
 })
 export class ShowTaskModule { }

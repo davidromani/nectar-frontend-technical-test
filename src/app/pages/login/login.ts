@@ -34,7 +34,9 @@ export class LoginPage {
     this.userData.login(this.login.username, this.login.password).subscribe((result) => {
       console.log('R', result);
       this.storage.set('jwt-token', result.body.token);
-      this.storage.set('user-name', this.login.username);
+      this.storage.set('user-id', result.body.id);
+      this.storage.set('user-name', result.body.name);
+      this.storage.set('user-email', result.body.email);
       this.showErrorAlert = false;
       this.errorMessage = '';
       this.router.navigateByUrl('/tasks/tasks');

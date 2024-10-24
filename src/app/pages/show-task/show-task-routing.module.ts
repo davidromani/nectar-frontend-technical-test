@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ShowTask } from './show-task';
+import { ShowTaskPage } from './show-task';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShowTask
+    component: ShowTaskPage
   }
 ];
 
