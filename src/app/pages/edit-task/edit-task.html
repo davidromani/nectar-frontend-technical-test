@@ -56,6 +56,11 @@
       ></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Date</ion-label>
+      <ion-datetime [(ngModel)]="task.date" [firstDayOfWeek]="1" presentation="date"></ion-datetime>
+    </ion-item>
+
     <ion-button expand="full" type="submit" color="primary">
       Edit Task
     </ion-button>

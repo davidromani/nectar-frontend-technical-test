@@ -29,6 +29,7 @@
     <ion-card-header>
       <ion-card-title>{{ task.title }}</ion-card-title>
       <ion-card-subtitle>{{ task.status }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ task.date | date: 'DD/MM/YYYY' }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       {{ task.description }}
