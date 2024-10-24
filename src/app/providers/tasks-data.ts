@@ -10,7 +10,9 @@ export class Task {
   id: number;
   status: number;
   title: String;
-  description: String
+  description: String;
+  date: String;
+  user: String;
 }
 
 @Injectable({

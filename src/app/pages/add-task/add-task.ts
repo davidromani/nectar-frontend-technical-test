@@ -20,9 +20,15 @@ export class AddTaskPage {
     public router: Router,
     public storage: Storage,
   ) { 
-    this.showLoadingAlert = true;
+    this.showLoadingAlert = false;
     this.showErrorAlert = false;
     this.errorMessage = '';
+    this.task = new Task();
+    this.task.title = '';
+    this.task.description = '';
+    this.task.status = 0;
+    this.task.date = '2024-10-24T12:58:39.573Z';
+    this.task.user = '/api/users/1';
   }
 
   async addTask() {

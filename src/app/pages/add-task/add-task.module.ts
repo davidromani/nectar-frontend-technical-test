@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AddTaskPage } from './add-task';
-import { TasksPageRoutingModule } from './add-task-routing.module';
+import { AddTaskPageRoutingModule } from './add-task-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TasksPageRoutingModule
+    AddTaskPageRoutingModule
   ],
   declarations: [
     AddTaskPage,
