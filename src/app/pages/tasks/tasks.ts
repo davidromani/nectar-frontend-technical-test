@@ -57,7 +57,15 @@ export class TasksPage {
     );
   }
 
+  addTask() {
+    console.log('addTask');
+  }
+
   editTask(id: number) {
     console.log('editTask', id);
+  }
+
+  deleteTask(id: number) {
+    console.log('deleteTask', id);
   }
 }
