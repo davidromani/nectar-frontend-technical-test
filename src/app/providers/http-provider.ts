@@ -7,6 +7,7 @@ export var apiUrl = "https://localhost:4433/api";
 export var httpLink = {
   getAllTasks: apiUrl + "/tasks",
   addTask: apiUrl + "/tasks",
+  updateTask: apiUrl + "/tasks/",
   deleteTaskById: apiUrl + "/tasks/",
 }
 

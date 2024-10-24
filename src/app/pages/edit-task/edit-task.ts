@@ -59,15 +59,15 @@ export class EditTaskPage {
     let userId = await this.storage.get('user-id');
     if (this.task.title.trim() && this.task.description.trim()) {
       this.task.user = '/api/users/' + userId;
-      this.taskData.addTask(this.task, token).subscribe(
+      this.taskData.updateTask(this.task, token).subscribe(
         (response) => {
           this.showLoadingAlert = false;
-          console.log('Task added successfully', response);
+          console.log('Task updated successfully', response);
           // After successful task creation, redirect to the tasks list page
           this.router.navigate(['/tasks/tasks']);
         },
         (error) => {
-          console.error('Error adding task', error);
+          console.error('Error updating task', error);
           this.showLoadingAlert = false;
           this.showErrorAlert = true;
           this.errorMessage = error.statusText;

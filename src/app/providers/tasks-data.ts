@@ -51,6 +51,19 @@ export class TasksData {
     return this.http.post<Task>(httpLink.addTask, task, httpOptions);
   }
 
+  updateTask(task: Task, token: string): Observable<Task> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/ld+json',
+        'Authorization': 'Bearer ' + token
+      }),
+      mode: 'cors',
+      observe: "response" as 'body'
+    };
+    
+    return this.http.patch<Task>(httpLink.updateTask + task.id, task, httpOptions);
+  }
+
   deleteTask(id: number, token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
