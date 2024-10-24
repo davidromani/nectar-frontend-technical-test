@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
-import { UserData } from '../../providers/user-data';
-import { UserOptions } from '../../interfaces/user-options';
+import { Task } from '../../providers/tasks-data';
 
 @Component({
   selector: 'show-task',
@@ -11,50 +9,31 @@ import { UserOptions } from '../../interfaces/user-options';
   styleUrls: ['./show-task.scss'],
 })
 export class ShowTaskPage {
-  login: UserOptions = { username: '', password: '' };
-  submitted = false;
+  task: Task;
   showLoadingAlert: boolean;
   showErrorAlert: boolean;
   errorMessage: string;
 
   constructor(
-    public userData: UserData,
+    private route: ActivatedRoute,
     public router: Router,
     public storage: Storage,
   ) { 
-    this.storage.create();
-    this.showLoadingAlert = false;
+    this.showLoadingAlert = true;
     this.showErrorAlert = false;
     this.errorMessage = '';
+    this.task = new Task();
   }
 
-  async onLogin(form: NgForm) {
-    console.log('onLogin');
-    this.submitted = true;
-    this.userData.login(this.login.username, this.login.password).subscribe((result) => {
-      console.log('R', result);
-      this.storage.set('jwt-token', result.body.token);
-      this.storage.set('user-name', this.login.username);
-      this.showErrorAlert = false;
-      this.errorMessage = '';
-      this.router.navigateByUrl('/tasks/tasks');
-    },
-    (error) => {
-      console.error('error', error.statusText);
-      this.showErrorAlert = true;
-      this.errorMessage = error.statusText;
-    });
+  async ngOnInit() {
+    const taskId = +this.route.snapshot.paramMap.get('id');
+    console.log('Task detail ngOnInit', taskId);
+    let tasks = await this.storage.get('tasks');
+    console.log('Stored tasks', tasks);
+  }
 
-    /*this.userData.isAuthenticated().subscribe((authenticated) => {
-      if (authenticated) {
-        this.router.navigate(['/home']); // Navigate to the home page after login
-      }
-    });
-
-    if (form.valid) {
-      this.userData.login(this.login.username, this.login.password);
-      console.log(this.login.username, this.login.password);
-      this.router.navigateByUrl('/app/tabs/schedule');
-    }*/
+  goBackTask() {
+    console.log('goBackTask');
+    this.router.navigateByUrl('/tasks/tasks');
   }
 }

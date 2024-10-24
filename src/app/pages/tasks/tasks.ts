@@ -65,6 +65,11 @@ export class TasksPage {
     this.router.navigateByUrl('/add-task');
   }
 
+  showTask(id: number) {
+    console.log('showTask', id);
+    this.router.navigateByUrl('/show-task/' + id);
+  }
+
   editTask(id: number) {
     console.log('editTask', id);
   }

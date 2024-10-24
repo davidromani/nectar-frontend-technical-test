@@ -33,7 +33,7 @@
 
     <ion-list [inset]="true">
       <ion-item-sliding *ngFor="let task of tasks">
-        <ion-item [button]="true">
+        <ion-item [button]="true" [routerLink]="['/show-task', task.id]">
           <ion-label>{{ task.title }}</ion-label>
         </ion-item>
         <ion-item-options slot="end">

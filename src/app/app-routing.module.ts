@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskModule)
   },
   {
-    path: 'show-task',
+    path: 'show-task/:id',
     loadChildren: () => import('./pages/show-task/show-task.module').then(m => m.ShowTaskModule)
   },
 /*{

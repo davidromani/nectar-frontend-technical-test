@@ -1,68 +1,32 @@
 <ion-header>
-    <ion-toolbar color="tertiary">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="primary">
+      <ion-button fill="outline" (click)="goBackTask()">
+        Go back
+        <ion-icon slot="end" name="return-up-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Show Task</ion-title>
+  </ion-toolbar>
+</ion-header>
   
-      <ion-title>Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <div class="login-logo">
-      <img src="assets/img/appicon.svg" alt="Ionic logo">
-    </div>
+<ion-content>
+  <ion-list style="display:contents;">
+    <ion-item *ngIf="showLoadingAlert" color="primary">
+      <ion-label class="ion-text-wrap">
+        Loading...
+      </ion-label>
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-item>
+    <ion-item *ngIf="showErrorAlert" color="danger">
+      <ion-label class="ion-text-wrap">
+        {{ errorMessage }}
+      </ion-label>
+      <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
 
-    <ion-list style="display:contents;">
-      <ion-item *ngIf="showLoadingAlert" color="primary">
-        <ion-label class="ion-text-wrap">
-          Loading...
-        </ion-label>
-        <ion-spinner name="crescent"></ion-spinner>
-      </ion-item>
-      <ion-item *ngIf="showErrorAlert" color="danger">
-        <ion-label class="ion-text-wrap">
-          {{ errorMessage }}
-        </ion-label>
-        <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
-      </ion-item>
-    </ion-list>
-  
-    <div class="login-form">
-      <form #loginForm="ngForm" novalidate>
-        <ion-input
-          label="Username"
-          labelPlacement="stacked"
-          fill="solid"
-          [(ngModel)]="login.username"
-          name="username"
-          type="email"
-          #username="ngModel"
-          spellcheck="false"
-          autocapitalize="off"
-          errorText="Username is required"
-          required>
-        </ion-input>
-  
-        <ion-input
-          label="Password"
-          labelPlacement="stacked"
-          fill="solid"
-          [(ngModel)]="login.password"
-          name="password"
-          type="password"
-          #password="ngModel"
-          errorText="Password is required"
-          required>
-        </ion-input>
-  
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
-          </ion-col>
-        </ion-row>
-      </form>
-    </div>
-  
-  </ion-content>
-  
+  <div class="login-form">
+    <h1>{{ task.title }}</h1>
+  </div>
+</ion-content>

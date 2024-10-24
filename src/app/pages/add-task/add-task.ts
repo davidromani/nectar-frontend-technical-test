@@ -27,14 +27,16 @@ export class AddTaskPage {
     this.task.title = '';
     this.task.description = '';
     this.task.status = 0;
-    this.task.date = '2024-10-24T12:58:39.573Z';
-    this.task.user = '/api/users/1';
+    this.task.date = '2024-10-24T12:58:39.573Z'; // TODO replace by form widget
+    this.task.user = '';
   }
 
   async addTask() {
     console.log('addTask');
     let token = await this.storage.get('jwt-token');
+    let userId = await this.storage.get('user-id');
     if (this.task.title.trim() && this.task.description.trim()) {
+      this.task.user = '/api/users/' + userId;
       this.taskData.addTask(this.task, token).subscribe(
         (response) => {
           this.showLoadingAlert = false;
