@@ -66,7 +66,30 @@ export class TasksPage {
     console.log('editTask', id);
   }
 
-  deleteTask(id: number) {
+  async deleteTask(id: number) {
     console.log('deleteTask', id);
+    let token = await this.storage.get('jwt-token');
+    this.taskData.deleteTask(id, token).subscribe(
+      (response: any) => {
+        this.showLoadingAlert = false;
+        //this.tasks = response;
+        console.log('response', response.body);
+        location.reload();
+        /*response.body.member.forEach(item => {
+          let task = new Task();
+          task.id = item.id;
+          task.status = item.status;
+          task.title = item.title;
+          task.description = item.description;
+          this.tasks.push(task);
+        });*/
+      },
+      (error) => {
+        console.error('Error deleting task', error);
+        this.showLoadingAlert = false;
+        this.showErrorAlert = true;
+        this.errorMessage = error.statusText;
+      }
+    );
   }
 }

@@ -92,6 +92,19 @@ export class TasksData {
     return this.http.post<Task>(httpLink.addTask, task, httpOptions);
   }
 
+  deleteTask(id: number, token: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/ld+json',
+        'Authorization': 'Bearer ' + token
+      }),
+      mode: 'cors',
+      observe: "response" as 'body'
+    };
+    
+    return this.http.delete<Task>(httpLink.deleteTaskById + id, httpOptions);
+  }
+
   getMap() {
     return this.load().pipe(
       map((data: any) => {

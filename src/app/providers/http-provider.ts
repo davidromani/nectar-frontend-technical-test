@@ -8,7 +8,7 @@ export var apiUrl = "https://localhost:4433/api";
 export var httpLink = {
   getAllTasks: apiUrl + "/tasks",
   addTask: apiUrl + "/tasks",
-  deleteTaskyId: apiUrl + "/tasks",
+  deleteTaskById: apiUrl + "/tasks/",
 }
 
 @Injectable({
@@ -37,6 +37,6 @@ export class HttpProviderService {
   }
 
   public deleteTaskById(model: any): Observable<any> {
-    return this.webApiService.post(httpLink.deleteTaskyId + '/' + model, "");
+    return this.webApiService.post(httpLink.deleteTaskById + '/' + model, "");
   }
 }                          
