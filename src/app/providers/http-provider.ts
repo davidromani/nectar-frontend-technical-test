@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WebApiService } from './api-manager';
+import { Storage } from '@ionic/storage-angular';
 
-var apiUrl = "https://localhost:4433/api";
+export var apiUrl = "https://localhost:4433/api";
 
-var httpLink = {
+export var httpLink = {
   getAllTasks: apiUrl + "/tasks",
   deleteTaskyId: apiUrl + "/tasks",
 }
@@ -14,7 +15,10 @@ var httpLink = {
 })
 
 export class HttpProviderService {
-  constructor(private webApiService: WebApiService) { }
+  constructor(
+    private webApiService: WebApiService,
+    public storage: Storage,
+  ) { }
 
   public login(username: string, password: string) {
     return this.webApiService.post(apiUrl + '/login_check', {
@@ -23,8 +27,12 @@ export class HttpProviderService {
     });
   }
 
-  public getAllTasks(): Observable<any> {
-    return this.webApiService.get(httpLink.getAllTasks);
+  async getAllTasks() {
+    await this.storage.get('jwt-token').then((value) => {
+      console.log('getAllTasks');
+      let result = this.webApiService.get(httpLink.getAllTasks, value);
+      console.log('result', result);
+    });
   }
 
   public deleteTaskById(model: any): Observable<any> {

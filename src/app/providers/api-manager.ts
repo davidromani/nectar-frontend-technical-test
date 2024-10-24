@@ -13,12 +13,14 @@ export class WebApiService {
 
   // Get call method
   // Param 1 : url
-  get(url: string): Observable<any> {
+  get(url: string, token: string): Observable<any> {
+    console.log('get', url, token);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Cache-Control' : 'no-cache',
-        'Pragma' : 'no-cache'
+        'Pragma' : 'no-cache',
+        'Bearer' : token
       }),
       observe: "response" as 'body'
     };

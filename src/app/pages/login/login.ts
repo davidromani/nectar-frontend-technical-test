@@ -30,9 +30,7 @@ export class LoginPage {
 
   async onLogin(form: NgForm) {
     console.log('onLogin');
-  
     this.submitted = true;
-
     this.userData.login(this.login.username, this.login.password).subscribe((result) => {
       console.log('R', result);
       this.storage.set('jwt-token', result.body.token);
