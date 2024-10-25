@@ -44,8 +44,13 @@
       <ion-label position="floating">Description</ion-label>
       <ion-textarea [(ngModel)]="task.description" name="description" required></ion-textarea>
     </ion-item>
-    <ion-button expand="full" type="submit" color="primary">
-      Edit Task
-    </ion-button>
+    <div class="actions">
+      <ion-button type="submit" color="primary">
+        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Update Task
+      </ion-button>
+      <ion-button type="submit" color="danger" [routerLink]="['/tasks/tasks']">
+        <ion-icon slot="start" name="close-outline"></ion-icon> Cancel
+      </ion-button>
+    </div>
   </form>
 </ion-content>

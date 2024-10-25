@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Task, TasksData } from '../../providers/tasks-data';
@@ -16,9 +17,10 @@ export class TasksPage {
   errorMessage: string;
 
   constructor(
-    public taskData: TasksData,
-    public router: Router,
-    public storage: Storage,
+    private taskData: TasksData,
+    private router: Router,
+    private storage: Storage,
+    private actionSheetController: ActionSheetController,
   ) { 
     this.tasks = [];
     this.showLoadingAlert = true;
@@ -33,13 +35,10 @@ export class TasksPage {
   async loadTasks() {
     let token = await this.storage.get('jwt-token');
     console.log('TOKEN', token);
-    /*let response = this.taskData.getTasks(token);
-    console.log('response', response);*/
     this.taskData.getTasks(token).subscribe(
       (response: any) => {
         this.tasks = [];
         this.showLoadingAlert = false;
-        //this.tasks = response;
         console.log('response', response.body);
         response.body.member.forEach(item => {
           let task = new Task();
@@ -77,23 +76,76 @@ export class TasksPage {
     this.router.navigateByUrl('/edit-task/' + id);
   }
 
+  async markAsCompletedTask(id: number) {
+    console.log('markAsCompletedTask', id);
+    let token = await this.storage.get('jwt-token');
+    let userId = await this.storage.get('user-id');
+    this.showLoadingAlert = true;
+    let found = false;
+    let task = new Task();
+    this.tasks.forEach(item => {
+      if (item.id === id) {
+        found = true;
+        task.id = item.id;
+        task.status = 1;
+        task.title = item.title;
+        task.description = item.description;
+        task.date = item.date;
+      }
+    });
+    if (found) {
+      task.user = '/api/users/' + userId;
+      this.taskData.updateTask(task, token).subscribe(
+        (response) => {
+          this.showLoadingAlert = false;
+          console.log('Task updated successfully', response);
+          location.reload();
+        },
+        (error) => {
+          console.error('Error updating task', error);
+          this.showLoadingAlert = false;
+          this.showErrorAlert = true;
+          this.errorMessage = error.statusText;
+        }
+      );
+    } else {
+      this.showLoadingAlert = false;
+      this.showErrorAlert = true;
+      this.errorMessage = 'No task to mark as completed found';
+    }
+  }
+
+  async presentDeleteActionSheet(taskId: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Confirm Delete',
+      subHeader: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteTask(taskId);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
   async deleteTask(id: number) {
     console.log('deleteTask', id);
     let token = await this.storage.get('jwt-token');
     this.taskData.deleteTask(id, token).subscribe(
       (response: any) => {
         this.showLoadingAlert = false;
-        //this.tasks = response;
         console.log('response', response.body);
         location.reload();
-        /*response.body.member.forEach(item => {
-          let task = new Task();
-          task.id = item.id;
-          task.status = item.status;
-          task.title = item.title;
-          task.description = item.description;
-          this.tasks.push(task);
-        });*/
       },
       (error) => {
         console.error('Error deleting task', error);

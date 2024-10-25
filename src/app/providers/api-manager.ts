@@ -11,8 +11,6 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class WebApiService {
   constructor(private httpClient: HttpClient) { }
 
-  // Get call method
-  // Param 1 : url
   get(url: string, token: string): Observable<any> {
     console.log('get', url, token);
     const httpOptions = {
@@ -34,9 +32,6 @@ export class WebApiService {
     );
   }
 
-  // Post call method 
-  // Param 1 : url
-  // Param 2 : model
   post(url: string, model: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

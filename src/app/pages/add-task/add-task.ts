@@ -16,9 +16,9 @@ export class AddTaskPage {
   errorMessage: string;
 
   constructor(
-    public taskData: TasksData,
-    public router: Router,
-    public storage: Storage,
+    private taskData: TasksData,
+    private router: Router,
+    private storage: Storage,
   ) { 
     this.showLoadingAlert = false;
     this.showErrorAlert = false;

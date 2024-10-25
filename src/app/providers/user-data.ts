@@ -14,8 +14,8 @@ export class UserData {
   private authState = new BehaviorSubject(false);
 
   constructor(
-    public storage: Storage,
-    public api: HttpProviderService,
+    private storage: Storage,
+    private api: HttpProviderService,
   ) { 
     this.storage.create();
     this.checkToken();
