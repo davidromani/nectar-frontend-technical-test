@@ -27,7 +27,7 @@ export class AddTaskPage {
     this.task.title = '';
     this.task.description = '';
     this.task.status = 0;
-    this.task.date = '2024-10-24T12:58:39.573Z'; // TODO replace by form widget
+    this.task.date = '2024-10-24T12:58:39.573Z';
     this.task.user = '';
   }
 

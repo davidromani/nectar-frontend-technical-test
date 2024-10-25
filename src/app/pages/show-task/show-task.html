@@ -27,8 +27,15 @@
   </ion-list>
   <ion-card color="light" *ngIf="found">
     <ion-card-header>
+      <ion-chip color="warning" *ngIf="task.status == 0">
+        <ion-icon name="hourglass-outline"></ion-icon>
+        <ion-label>Pending</ion-label>
+      </ion-chip>
+      <ion-chip color="success" *ngIf="task.status == 1">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-label>Completed</ion-label>
+      </ion-chip>
       <ion-card-title>{{ task.title }}</ion-card-title>
-      <ion-card-subtitle>{{ task.status }}</ion-card-subtitle>
       <ion-card-subtitle>{{ task.date | date: 'DD/MM/YYYY' }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
