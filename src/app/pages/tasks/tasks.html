@@ -33,8 +33,10 @@
   <ion-list [inset]="true">
     <ion-item-sliding *ngFor="let task of tasks">
       <ion-item [button]="true" [routerLink]="['/show-task', task.id]">
+        <ion-icon aria-hidden="true" name="hourglass-outline" slot="start" color="warning" *ngIf="task.status == 0"></ion-icon>
+        <ion-icon aria-hidden="true" name="checkmark-circle-outline" slot="start" color="success" *ngIf="task.status == 1"></ion-icon>
         <ion-label>
-          <h3>{{ task.title }}</h3>
+          <h2>{{ task.title }}</h2>
           <p>{{ task.date | date: 'dd/MM/YYYY' }}</p>
         </ion-label>
       </ion-item>
