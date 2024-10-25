@@ -43,13 +43,13 @@
     </ion-card-content>
   </ion-card>
   <div class="actions">
-    <ion-button type="submit" color="success" (click)="markAsCompletedTask(task.id)" *ngIf="task.status == 0">
+    <ion-button color="success" (click)="markAsCompletedTask(task.id)" *ngIf="task.status == 0">
       <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Mark As Completed
     </ion-button>
-    <ion-button type="submit" color="primary" [routerLink]="['/edit-task', task.id]">
+    <ion-button color="primary" [routerLink]="['/edit-task', task.id]">
       <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Edit Task
     </ion-button>
-    <ion-button type="submit" color="danger">
+    <ion-button color="danger" (click)="presentDeleteActionSheet()">
       <ion-icon slot="start" name="trash"></ion-icon> Delete Task
     </ion-button>
   </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Task, TasksData } from '../../providers/tasks-data';
@@ -17,9 +18,10 @@ export class ShowTaskPage {
 
   constructor(
     private route: ActivatedRoute,
-    public router: Router,
-    public storage: Storage,
-    public taskData: TasksData,
+    private router: Router,
+    private storage: Storage,
+    private actionSheetController: ActionSheetController,
+    private taskData: TasksData,
   ) { 
     this.showLoadingAlert = true;
     this.showErrorAlert = false;
@@ -67,6 +69,47 @@ export class ShowTaskPage {
       },
       (error) => {
         console.error('Error updating task', error);
+        this.showLoadingAlert = false;
+        this.showErrorAlert = true;
+        this.errorMessage = error.statusText;
+      }
+    );
+  }
+
+  async presentDeleteActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Confirm Delete',
+      subHeader: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.delete();
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  async delete() {
+    console.log('delete', this.task.id);
+    let token = await this.storage.get('jwt-token');
+    this.taskData.deleteTask(this.task.id, token).subscribe(
+      (response: any) => {
+        this.showLoadingAlert = false;
+        console.log('response', response.body);
+        this.router.navigateByUrl('/tasks/tasks');
+      },
+      (error) => {
+        console.error('Error deleting task', error);
         this.showLoadingAlert = false;
         this.showErrorAlert = true;
         this.errorMessage = error.statusText;
