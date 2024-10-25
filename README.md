@@ -18,4 +18,4 @@ $ make up
 #### Usage notes
 
  * Make sure that you have previously clone, build & run [this](https://github.com/davidromani/nectar-backend-technical-test) instance
- * To manage tasks as a ROLE_USER open a browser [here](https://localhost:8100/login) with username `1email@` and password `N3ct4r*`
+ * To manage tasks as a ROLE_USER open a browser [here](https://localhost:8100/login) with username `1email@email.com` and password `password1111`
