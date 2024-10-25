@@ -20,12 +20,13 @@ export class TasksPage {
     public router: Router,
     public storage: Storage,
   ) { 
+    this.tasks = [];
     this.showLoadingAlert = true;
     this.showErrorAlert = false;
     this.errorMessage = '';
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.loadTasks();
   }
 
@@ -36,6 +37,7 @@ export class TasksPage {
     console.log('response', response);*/
     this.taskData.getTasks(token).subscribe(
       (response: any) => {
+        this.tasks = [];
         this.showLoadingAlert = false;
         //this.tasks = response;
         console.log('response', response.body);
