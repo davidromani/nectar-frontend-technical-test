@@ -36,11 +36,11 @@ export class EditTaskPage {
     tasks.forEach(item => {
       if (item.id === taskId) {
         this.task.id = item.id;
-        this.task.status = item.status;
         this.task.title = item.title;
         this.task.description = item.description;
-        this.task.user = item.user;
+        this.task.status = item.status;
         this.task.date = item.date;
+        this.task.user = item.user;
         this.found = true;
       }
     });
@@ -79,6 +79,11 @@ export class EditTaskPage {
       this.showErrorAlert = true;
       this.errorMessage = 'Please fill in all fields';
     }
+  }
+
+  handleStatusChange(event) {
+    console.log('Current value:', event.target.value);
+    this.task.status = parseInt(event.target.value);
   }
 
   goBackTask() {
