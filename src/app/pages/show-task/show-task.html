@@ -36,7 +36,7 @@
         <ion-label>Completed</ion-label>
       </ion-chip>
       <ion-card-title>{{ task.title }}</ion-card-title>
-      <ion-card-subtitle>{{ task.date | date: 'dd/MM/YYYY' }}</ion-card-subtitle>
+      <ion-card-subtitle><ion-icon name="calendar-outline"></ion-icon> {{ task.date | date: 'dd/MM/YYYY' }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       {{ task.description }}
