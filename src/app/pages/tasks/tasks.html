@@ -49,7 +49,7 @@
         <ion-item-option color="primary" (click)="editTask(task.id)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="deleteTask(task.id)">
+        <ion-item-option color="danger" (click)="presentDeleteActionSheet(task.id)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 import { Task, TasksData } from '../../providers/tasks-data';
@@ -16,9 +17,10 @@ export class TasksPage {
   errorMessage: string;
 
   constructor(
-    public taskData: TasksData,
-    public router: Router,
-    public storage: Storage,
+    private taskData: TasksData,
+    private router: Router,
+    private storage: Storage,
+    private actionSheetController: ActionSheetController,
   ) { 
     this.tasks = [];
     this.showLoadingAlert = true;
@@ -111,6 +113,29 @@ export class TasksPage {
       this.showErrorAlert = true;
       this.errorMessage = 'No task to mark as completed found';
     }
+  }
+
+  async presentDeleteActionSheet(taskId: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Confirm Delete',
+      subHeader: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteTask(taskId);
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+        },
+      ],
+    });
+    await actionSheet.present();
   }
 
   async deleteTask(id: number) {
