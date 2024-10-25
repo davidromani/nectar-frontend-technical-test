@@ -3,7 +3,7 @@
     <ion-buttons slot="primary">
       <ion-button fill="outline" (click)="goBackTask()">
         Go back
-        <ion-icon slot="end" name="add-outline"></ion-icon>
+        <ion-icon slot="end" name="return-up-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Add Task</ion-title>
@@ -44,8 +44,13 @@
       <ion-label position="floating">Description</ion-label>
       <ion-textarea [(ngModel)]="task.description" name="description" required></ion-textarea>
     </ion-item>
-    <ion-button expand="full" type="submit" color="primary">
-      Add Task
-    </ion-button>
+    <div class="actions">
+      <ion-button type="submit" color="primary">
+        <ion-icon slot="start" name="add-outline"></ion-icon> Add Task
+      </ion-button>
+      <ion-button type="submit" color="danger" [routerLink]="['/tasks/tasks']">
+        <ion-icon slot="start" name="close-outline"></ion-icon> Cancel
+      </ion-button>
+    </div>
   </form>
 </ion-content>
