@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-
+import { HttpProviderService } from './http-provider';
+import { BehaviorSubject } from 'rxjs';
+//import jwt from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +10,39 @@ import { Storage } from '@ionic/storage-angular';
 export class UserData {
   favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
+  private tokenKey = 'jwt-token';
+  private authState = new BehaviorSubject(false);
 
   constructor(
-    public storage: Storage
-  ) { }
+    public storage: Storage,
+    public api: HttpProviderService,
+  ) { 
+    this.storage.create();
+    this.checkToken();
+  }
+
+  async checkToken() {
+    const token = await this.storage.get(this.tokenKey);
+    if (token) {
+      //const decoded = jwtDecode(token);
+      const decoded = 'CHANGEME';
+      const isExpired = this.isTokenExpired(decoded);
+      if (!isExpired) {
+        this.authState.next(true);
+      } else {
+        await this.storage.remove(this.tokenKey);
+      }
+    }
+  }
+
+  private isTokenExpired(token: any) {
+    const now = Math.floor(new Date().getTime() / 1000);
+    return token.exp < now;
+  }
+
+  isAuthenticated() {
+    return this.authState.asObservable();
+  }
 
   hasFavorite(sessionName: string): boolean {
     return (this.favorites.indexOf(sessionName) > -1);
@@ -29,25 +59,32 @@ export class UserData {
     }
   }
 
-  login(username: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(username);
-      return window.dispatchEvent(new CustomEvent('user:login'));
-    });
+  login(username: string, password: string) {
+    console.log('user-data login', username, password);
+   
+
+    /*let result = this.api.login(username, password).subscribe(async (res) => {
+      if (res.token) {
+        await this.storage.set(this.tokenKey, res.token);
+        this.authState.next(true);
+        window.dispatchEvent(new CustomEvent('user:login'));
+      }
+    },
+    (error) => {
+      console.error('user-data login error response', error);
+      this.authState.next(false);
+    });*/
+
+    return this.api.login(username, password);;
   }
 
-  signup(username: string): Promise<any> {
-    return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
-      this.setUsername(username);
-      return window.dispatchEvent(new CustomEvent('user:signup'));
-    });
-  }
-
-  logout(): Promise<any> {
+  async logout(): Promise<any> {
     return this.storage.remove(this.HAS_LOGGED_IN).then(() => {
       return this.storage.remove('username');
     }).then(() => {
       window.dispatchEvent(new CustomEvent('user:logout'));
+      this.storage.remove(this.tokenKey);
+      this.authState.next(false);
     });
   }
 
@@ -64,12 +101,6 @@ export class UserData {
   isLoggedIn(): Promise<boolean> {
     return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
       return value === true;
-    });
-  }
-
-  checkHasSeenTutorial(): Promise<string> {
-    return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
-      return value;
     });
   }
 }
