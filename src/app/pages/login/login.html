@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="tertiary">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
@@ -12,6 +12,21 @@
     <div class="login-logo">
       <img src="assets/img/appicon.svg" alt="Ionic logo">
     </div>
+
+    <ion-list style="display:contents;">
+      <ion-item *ngIf="showLoadingAlert" color="primary">
+        <ion-label class="ion-text-wrap">
+          Loading...
+        </ion-label>
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-item>
+      <ion-item *ngIf="showErrorAlert" color="danger">
+        <ion-label class="ion-text-wrap">
+          {{ errorMessage }}
+        </ion-label>
+        <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
+      </ion-item>
+    </ion-list>
   
     <div class="login-form">
       <form #loginForm="ngForm" novalidate>
@@ -21,7 +36,7 @@
           fill="solid"
           [(ngModel)]="login.username"
           name="username"
-          type="text"
+          type="email"
           #username="ngModel"
           spellcheck="false"
           autocapitalize="off"
@@ -44,9 +59,6 @@
         <ion-row>
           <ion-col>
             <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button (click)="onSignup()" color="light" expand="block">Signup</ion-button>
           </ion-col>
         </ion-row>
       </form>

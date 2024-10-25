@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="primary">
+      <ion-button fill="outline" (click)="goBackTask()">
+        Go back
+        <ion-icon slot="end" name="return-up-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Show Task</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list style="display:contents;">
+    <ion-item *ngIf="showLoadingAlert" color="primary">
+      <ion-label class="ion-text-wrap">
+        Loading...
+      </ion-label>
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-item>
+    <ion-item *ngIf="showErrorAlert" color="danger">
+      <ion-label class="ion-text-wrap">
+        {{ errorMessage }}
+      </ion-label>
+      <ion-icon name="alert-circle-outline" size="large" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-card color="light" *ngIf="found">
+    <ion-card-header>
+      <ion-chip color="warning" *ngIf="task.status == 0">
+        <ion-icon name="hourglass-outline"></ion-icon>
+        <ion-label>Pending</ion-label>
+      </ion-chip>
+      <ion-chip color="success" *ngIf="task.status == 1">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-label>Completed</ion-label>
+      </ion-chip>
+      <ion-card-title>{{ task.title }}</ion-card-title>
+      <ion-card-subtitle>{{ task.date | date: 'dd/MM/YYYY' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      {{ task.description }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
