@@ -1,50 +1,51 @@
 <ion-header>
-    <ion-toolbar color="tertiary">
-      <ion-buttons slot="primary">
-        <ion-button fill="outline" (click)="addTask()">
-          Add
-          <ion-icon slot="end" name="add-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>Tasks</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="primary">
+      <ion-button fill="outline" (click)="addTask()">
+        Add
+        <ion-icon slot="end" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Tasks</ion-title>
+  </ion-toolbar>
+</ion-header>
   
-  <ion-content>
-    <ion-list style="display:contents;">
-      <ion-item *ngIf="showLoadingAlert" color="primary">
-        <ion-label class="ion-text-wrap">
-          Loading...
+<ion-content>
+  <ion-list style="display:contents;">
+    <ion-item *ngIf="showLoadingAlert" color="primary">
+      <ion-label class="ion-text-wrap">
+        Loading...
+      </ion-label>
+      <ion-spinner name="crescent"></ion-spinner>
+    </ion-item>
+    <ion-item *ngIf="showErrorAlert" color="danger">
+      <ion-label class="ion-text-wrap">
+        {{ errorMessage }}
+      </ion-label>
+      <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-row>
+    <ion-col>
+      Slide rows to edit or delete tasks
+    </ion-col>
+  </ion-row> 
+  <ion-list [inset]="true">
+    <ion-item-sliding *ngFor="let task of tasks">
+      <ion-item [button]="true" [routerLink]="['/show-task', task.id]">
+        <ion-label>
+          <h3>{{ task.title }}</h3>
+          <p>{{ task.date | date: 'dd/MM/YYYY' }}</p>
         </ion-label>
-        <ion-spinner name="crescent"></ion-spinner>
       </ion-item>
-      <ion-item *ngIf="showErrorAlert" color="danger">
-        <ion-label class="ion-text-wrap">
-          {{ errorMessage }}
-        </ion-label>
-        <ion-icon name="cloud-offline-outline" size="large" slot="end"></ion-icon>
-      </ion-item>
-    </ion-list>
-    <ion-row>
-      <ion-col>
-        Slide rows to edit or delete tasks
-      </ion-col>
-    </ion-row> 
-
-    <ion-list [inset]="true">
-      <ion-item-sliding *ngFor="let task of tasks">
-        <ion-item [button]="true" [routerLink]="['/show-task', task.id]">
-          <ion-label>{{ task.title }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="primary" (click)="editTask(task.id)">
-            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" (click)="deleteTask(task.id)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  </ion-content>
-  
+      <ion-item-options slot="end">
+        <ion-item-option color="primary" (click)="editTask(task.id)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="deleteTask(task.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
