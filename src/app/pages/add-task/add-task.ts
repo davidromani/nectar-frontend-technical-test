@@ -59,6 +59,11 @@ export class AddTaskPage {
     }
   }
 
+  handleStatusChange(event) {
+    console.log('Current value:', event.target.value);
+    this.task.status = parseInt(event.target.value);
+  }
+
   goBackTask() {
     console.log('goBackTask');
     this.router.navigateByUrl('/tasks/tasks');
