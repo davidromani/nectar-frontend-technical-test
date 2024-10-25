@@ -77,6 +77,10 @@ export class TasksPage {
     this.router.navigateByUrl('/edit-task/' + id);
   }
 
+  markAsCompletedTask(id: number) {
+    console.log('markAsCompletedTask', id);
+  }
+
   async deleteTask(id: number) {
     console.log('deleteTask', id);
     let token = await this.storage.get('jwt-token');
