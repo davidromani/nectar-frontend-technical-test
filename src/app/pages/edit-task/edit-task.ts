@@ -16,10 +16,10 @@ export class EditTaskPage {
   found: boolean;
 
   constructor(
-    public taskData: TasksData,
+    private taskData: TasksData,
     private route: ActivatedRoute,
-    public router: Router,
-    public storage: Storage,
+    private router: Router,
+    private storage: Storage,
   ) { 
     this.showLoadingAlert = false;
     this.showErrorAlert = false;

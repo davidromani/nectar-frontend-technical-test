@@ -18,9 +18,9 @@ export class LoginPage {
   errorMessage: string;
 
   constructor(
-    public userData: UserData,
-    public router: Router,
-    public storage: Storage,
+    private userData: UserData,
+    private router: Router,
+    private storage: Storage,
   ) { 
     this.storage.create();
     this.showLoadingAlert = false;

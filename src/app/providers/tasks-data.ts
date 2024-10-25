@@ -21,8 +21,8 @@ export class TasksData {
 
   constructor(
     private http: HttpClient,
-    public storage: Storage,
-    public api: HttpProviderService,
+    private storage: Storage,
+    private api: HttpProviderService,
   ) {}
 
   getTasks(token: string): Observable<Task[]> {
