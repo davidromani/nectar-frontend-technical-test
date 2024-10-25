@@ -42,4 +42,15 @@
       {{ task.description }}
     </ion-card-content>
   </ion-card>
+  <div class="actions">
+    <ion-button type="submit" color="success" *ngIf="task.status == 0">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Mark As Completed
+    </ion-button>
+    <ion-button type="submit" color="primary" [routerLink]="['/edit-task', task.id]">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon> Edit Task
+    </ion-button>
+    <ion-button type="submit" color="danger">
+      <ion-icon slot="start" name="trash"></ion-icon> Delete Task
+    </ion-button>
+  </div>
 </ion-content>
