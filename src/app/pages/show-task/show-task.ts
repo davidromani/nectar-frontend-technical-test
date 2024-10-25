@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
-import { Task } from '../../providers/tasks-data';
+import { Task, TasksData } from '../../providers/tasks-data';
 
 @Component({
   selector: 'show-task',
@@ -19,6 +19,7 @@ export class ShowTaskPage {
     private route: ActivatedRoute,
     public router: Router,
     public storage: Storage,
+    public taskData: TasksData,
   ) { 
     this.showLoadingAlert = true;
     this.showErrorAlert = false;
@@ -50,6 +51,27 @@ export class ShowTaskPage {
       this.showErrorAlert = true;
       this.errorMessage = 'Task with ID ' + taskId + ' not found';
     }
+  }
+
+  async markAsCompletedTask(id: number) {
+    console.log('markAsCompletedTask', id);
+    let token = await this.storage.get('jwt-token');
+    let userId = await this.storage.get('user-id');
+    this.showLoadingAlert = true;
+    this.task.status = 1;
+    this.task.user = '/api/users/' + userId;
+    this.taskData.updateTask(this.task, token).subscribe(
+      (response) => {
+        this.showLoadingAlert = false;
+        console.log('Task updated successfully', response);
+      },
+      (error) => {
+        console.error('Error updating task', error);
+        this.showLoadingAlert = false;
+        this.showErrorAlert = true;
+        this.errorMessage = error.statusText;
+      }
+    );
   }
 
   goBackTask() {
