@@ -18,4 +18,7 @@ $ make up
 #### Usage notes
 
  * Make sure that you have previously clone, build & run [this](https://github.com/davidromani/nectar-backend-technical-test) instance
- * To manage tasks as a ROLE_USER open a browser [here](https://localhost:8100/login) with username `1email@email.com` and password `password1111`
+ * To manage tasks as a ROLE_USER open a browser [here](https://localhost:8100/login) 
+ * You will show a security risk warning due to self signed SSL certificate, that must be accepted. Indeed, is not a security risk because API calls never go outside of your local networks.
+ * Click on "Visit web page", and accept to apply changes. Then, login page will appears.
+ * Finally, login with the following credentials -> username `1email@email.com` and password `password1111`
